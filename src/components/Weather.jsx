@@ -1,6 +1,12 @@
+import './Weather.css'
+
 const Weather = () => {
   return (
-    <div>Weather</div>
+    <div className='weather'>
+        <div className="search-bar">
+            <input type="text" placeholder='Search...' />
+        </div>
+    </div>
   )
 }
 

@@ -7,9 +7,11 @@ import humidity_icon from '../assets/humidity.png'
 import rain_icon from '../assets/rain.png'
 import snow_icon from '../assets/snow.png'
 import wind_icon from '../assets/wind.png'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 
 const Weather = () => {
+
+    const inputRef = useRef();
 
     const [weatherData, setWeatherData] = useState(false);
 
@@ -32,6 +34,10 @@ const Weather = () => {
 
 
     const search = async (city) =>{
+        if(city === ""){
+            alert("Please enter a city name");
+            return;
+        };
         try{
             const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${import.meta.env.VITE_APP_ID}`;
             
@@ -53,15 +59,15 @@ const Weather = () => {
     }
 
     useEffect(()=>{
-        search("New York");
+        search("Chennai");
     },[])
 
 
   return (
     <div className='weather'>
         <div className="search-bar">
-            <input type="text" placeholder='Search...' />
-            <img src={search_icon} alt=''/>
+            <input ref={inputRef} type="text" placeholder='Search...' />
+            <img src={search_icon} alt='' onClick={()=>search(inputRef.current.value)}/>
         </div>
         <img src={weatherData.icon} alt='' className='weather-icon'/>
         <p className='temperature'>{weatherData.temperature}°C</p>
